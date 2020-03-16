@@ -8,7 +8,7 @@
       </div>
       <div class="col-md-10">
         <div class="card-body">
-          <a :href="repoURL" target="_blank" :title="repoTitle">
+          <a :href="repoURL" target="_blank" :title="repoFullTitle">
             <h3 class="card-title">
               {{ repoTitle }}
             </h3>
@@ -43,6 +43,7 @@ export default {
     repoUserAvatar: String,
     repoURL: String,
     repoTitle: String,
+    repoFullTitle: String,
     repoDesc: String,
     repoNumStars: Number,
     repoNumIssues: Number,

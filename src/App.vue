@@ -7,6 +7,7 @@
             v-for="repo in repos"
             :key="repo.id"
             :repoTitle="setRepoName(repo.name)"
+            :repoFullTitle="repo.name"
             :repoUserAvatar="repo.owner.avatar_url"
             :repoURL="repo.html_url"
             :repoDesc="setRepoDesc(repo.description)"
@@ -40,8 +41,9 @@ export default {
   },
   methods: {
     getRepos(pageNb, dateFrom) {
+      const baseURL = `https://api.github.com/search/repositories?q=created:>${dateFrom}&sort=stars&order=desc&page=${pageNb}`;
       return axios
-        .get(`https://api.github.com/search/repositories?q=created:>${dateFrom}&sort=stars&order=desc&page=${pageNb}`)
+        .get(baseURL)
         .then(result => {
           this.repos = this.repos.concat(result.data.items);
           console.log(this.repos);
