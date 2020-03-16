@@ -1,10 +1,24 @@
 <template>
   <div id="app">
-    <SingleRepo 
-      v-for="repo in repos"
-      :key="repo.id"
-      :repoName="repo.name"
-    />
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <SingleRepo 
+            v-for="repo in repos"
+            :key="repo.id"
+            :repoTitle="repo.name"
+            :repoUserAvatar="repo.owner.avatar_url"
+            :repoURL="repo.html_url"
+            :repoDesc="repo.description"
+            :repoNumStars="repo.stargazers_count"
+            :repoNumIssues="repo.open_issues_count"
+            :repoUserURL="repo.owner.html_url"
+            :repoUsername="repo.owner.login"
+            :repoDaysAgo="repo.created_at"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
