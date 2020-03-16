@@ -6,10 +6,10 @@
           <SingleRepo 
             v-for="repo in repos"
             :key="repo.id"
-            :repoTitle="repo.name"
+            :repoTitle="setRepoName(repo.name)"
             :repoUserAvatar="repo.owner.avatar_url"
             :repoURL="repo.html_url"
-            :repoDesc="repo.description"
+            :repoDesc="setRepoDesc(repo.description)"
             :repoNumStars="repo.stargazers_count"
             :repoNumIssues="repo.open_issues_count"
             :repoUserURL="repo.owner.html_url"
@@ -52,6 +52,18 @@ export default {
     },
     daysAgo(date) {
       return moment().diff(moment(date), "days");
+    },
+    setRepoName(name) {
+      if (name && name.length > 40)
+        return name.substring(0, 40) + "...";
+      else if(name && name.length <= 40)
+        return name;
+    },
+    setRepoDesc(desc) {
+      if (desc && desc.length > 250)
+        return desc.substring(0, 250) + "..." 
+      else if(desc && desc.length <= 250)
+        return desc;
     }
   },
   created(){
