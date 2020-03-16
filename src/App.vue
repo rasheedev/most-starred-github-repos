@@ -14,7 +14,7 @@
             :repoNumIssues="repo.open_issues_count"
             :repoUserURL="repo.owner.html_url"
             :repoUsername="repo.owner.login"
-            :repoDaysAgo="repo.created_at"
+            :repoDaysAgo="daysAgo(repo.created_at)"
           />
         </div>
       </div>
@@ -25,6 +25,7 @@
 <script>
 import SingleRepo from "./components/SingleRepo.vue";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   name: "App",
@@ -48,6 +49,9 @@ export default {
         .catch(error => {
           console.log(error.response);
         });
+    },
+    daysAgo(date) {
+      return moment().diff(moment(date), "days");
     }
   },
   created(){
