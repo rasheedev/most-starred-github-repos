@@ -17,6 +17,7 @@
             :repoUsername="repo.owner.login"
             :repoDaysAgo="daysAgo(repo.created_at)"
           />
+          <grid-loader class="loader" v-show="spinner"></grid-loader>
         </div>
       </div>
     </div>
@@ -27,16 +28,19 @@
 import SingleRepo from "./components/SingleRepo.vue";
 import axios from "axios";
 import moment from "moment";
+import GridLoader from "vue-spinner/src/GridLoader.vue";
 
 export default {
   name: "App",
   components: {
-    SingleRepo
+    SingleRepo,
+    GridLoader
   },
   data() {
     return {
       repos: [],
-      pageNumber: 1
+      pageNumber: 1,
+      spinner: true
     };
   },
   methods: {
@@ -46,9 +50,11 @@ export default {
         .get(baseURL)
         .then(result => {
           this.repos = this.repos.concat(result.data.items);
+          this.spinner = false;
           console.log(this.repos);
         })
         .catch(error => {
+          this.spinner = false;
           console.log(error.response);
         });
     },
@@ -82,5 +88,9 @@ export default {
 <style lang="scss">
 #app {
   margin: 40px 0;
+  .loader {
+    text-align: center;
+    margin: 0 auto;
+  }
 }
 </style>
