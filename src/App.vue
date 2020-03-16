@@ -16,5 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
-#app {}
+#app {
+  margin: 40px 0;
+}
 </style>
