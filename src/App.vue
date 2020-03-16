@@ -54,7 +54,6 @@ export default {
         .then(result => {
           this.repos = this.repos.concat(result.data.items);
           this.spinner = false;
-          console.log(this.repos);
         })
         .catch(error => {
           this.spinner = false;
