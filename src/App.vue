@@ -3,7 +3,8 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-10">
-          <SingleRepo 
+          <!-- Displaying Repositories -->
+          <SingleRepo
             v-for="repo in repos"
             :key="repo.id"
             :repoTitle="setRepoName(repo.name)"
@@ -17,6 +18,7 @@
             :repoUsername="repo.owner.login"
             :repoDaysAgo="daysAgo(repo.created_at)"
           />
+          <!-- Spinner before each request to get repos -->
           <grid-loader class="loader" v-show="spinner"></grid-loader>
         </div>
       </div>
@@ -44,6 +46,7 @@ export default {
     };
   },
   methods: {
+    // Method to get the most starred Github repos that were created in the last 30 days
     getRepos(pageNb, dateFrom, reposPerPage = 30) {
       const baseURL = `https://api.github.com/search/repositories?q=created:>${dateFrom}&sort=stars&order=desc&page=${pageNb}&per_page=${reposPerPage}`;
       return axios
@@ -58,26 +61,7 @@ export default {
           console.log(error.response);
         });
     },
-    daysAgo(date) {
-      return moment().diff(moment(date), "days");
-    },
-    startDate(days) {
-      return moment()
-        .subtract(days, "days")
-        .format("YYYY-MM-DD");
-    },
-    setRepoName(name) {
-      if (name && name.length > 40)
-        return name.substring(0, 40) + "...";
-      else if(name && name.length <= 40)
-        return name;
-    },
-    setRepoDesc(desc) {
-      if (desc && desc.length > 250)
-        return desc.substring(0, 250) + "..." 
-      else if(desc && desc.length <= 250)
-        return desc;
-    },
+    // Method to get new repositories when the scroll reachs the bottom of the page
     scroll() {
       window.onscroll = () => {
         let winHeight = document.documentElement.scrollTop + window.innerHeight;
@@ -90,8 +74,35 @@ export default {
           }
         }
       };
+    },
+    // Method to calculate the number of days since the repo creation date using moment.js
+    daysAgo(date) {
+      return moment().diff(moment(date), "days");
+    },
+    // Method to calculate the date from which we're going to start getting repos using moment.js
+    startDate(days) {
+      return moment()
+        .subtract(days, "days")
+        .format("YYYY-MM-DD");
+    },
+    // Method to shorten long repo name
+    setRepoName(name) {
+      if (name && name.length > 40) {
+        return name.substring(0, 40) + "...";
+      } else if (name && name.length <= 40) {
+        return name;
+      }
+    },
+    // Method to shorten long repo descroptions
+    setRepoDesc(desc) {
+      if (desc && desc.length > 250) {
+        return desc.substring(0, 250) + "...";
+      } else if (desc && desc.length <= 250) {
+        return desc;
+      }
     }
   },
+  // displaying repositories after the vue instance is created
   created() {
     this.getRepos(this.pageNumber, this.startDate(30));
     this.scroll();
