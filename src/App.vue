@@ -39,9 +39,9 @@ export default {
     };
   },
   methods: {
-    getRepos(pageNb) {
+    getRepos(pageNb, dateFrom) {
       return axios
-        .get(`https://api.github.com/search/repositories?q=created:>2017-10-22&sort=stars&order=desc&page=${pageNb}`)
+        .get(`https://api.github.com/search/repositories?q=created:>${dateFrom}&sort=stars&order=desc&page=${pageNb}`)
         .then(result => {
           this.repos = this.repos.concat(result.data.items);
           console.log(this.repos);
@@ -52,6 +52,11 @@ export default {
     },
     daysAgo(date) {
       return moment().diff(moment(date), "days");
+    },
+    startDate(days) {
+      return moment()
+        .subtract(days, "days")
+        .format("YYYY-MM-DD");
     },
     setRepoName(name) {
       if (name && name.length > 40)
@@ -66,8 +71,8 @@ export default {
         return desc;
     }
   },
-  created(){
-    this.getRepos(this.pageNumber);
+  created() {
+    this.getRepos(this.pageNumber, this.startDate(30));
   }
 };
 </script>
