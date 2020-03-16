@@ -44,8 +44,8 @@ export default {
     };
   },
   methods: {
-    getRepos(pageNb, dateFrom) {
-      const baseURL = `https://api.github.com/search/repositories?q=created:>${dateFrom}&sort=stars&order=desc&page=${pageNb}`;
+    getRepos(pageNb, dateFrom, reposPerPage = 30) {
+      const baseURL = `https://api.github.com/search/repositories?q=created:>${dateFrom}&sort=stars&order=desc&page=${pageNb}&per_page=${reposPerPage}`;
       return axios
         .get(baseURL)
         .then(result => {
@@ -77,10 +77,24 @@ export default {
         return desc.substring(0, 250) + "..." 
       else if(desc && desc.length <= 250)
         return desc;
+    },
+    scroll() {
+      window.onscroll = () => {
+        let winHeight = document.documentElement.scrollTop + window.innerHeight;
+        let offHeight = document.documentElement.offsetHeight;
+        if (winHeight === offHeight) {
+          if (this.spinner === false) {
+            this.spinner = true;
+            this.pageNumber++;
+            this.getRepos(this.pageNumber, this.startDate(30));
+          }
+        }
+      };
     }
   },
   created() {
     this.getRepos(this.pageNumber, this.startDate(30));
+    this.scroll();
   }
 };
 </script>
