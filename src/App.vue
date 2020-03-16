@@ -55,10 +55,6 @@ export default {
           this.repos = this.repos.concat(result.data.items);
           this.spinner = false;
         })
-        .catch(error => {
-          this.spinner = false;
-          console.log(error.response);
-        });
     },
     // Method to get new repositories when the scroll reachs the bottom of the page
     scroll() {
