@@ -6,7 +6,7 @@ This App will list the most starred Github repos that were created in the last 3
 * Github repositories are descendingly sorted by stars count.
 * This App uses infinite scroll th display more new repositories.
 
-## Libraries used in this Application
+## Libraries used
 + axios: to make http requests and get Github repositories.
 + moment.js: to deal easily with dates instead of native javascript Date object.
 + vue-spinner: to run a loading spinner while the script tries to get repositories.
