@@ -3,6 +3,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-10">
+		  <div class="title">
+			<h3>The most starred Github Repositories in the last 30 days</h3>
+		  </div>
           <!-- Displaying Repositories -->
           <SingleRepo
             v-for="repo in repos"
@@ -111,6 +114,20 @@ export default {
   .loader {
     text-align: center;
     margin: 0 auto;
+  }
+  .title {
+	padding: 25px 40px;
+    text-align: center;
+    margin-bottom: 40px;
+    border-radius: 4px;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+	h3 {
+	  margin: 0!important;
+      font-size: 22px;
+      font-weight: 600;
+      color: #0c5460;
+	}
   }
 }
 </style>
